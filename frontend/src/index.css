@@ -1,0 +1,32 @@
+﻿:root {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  color: #203d38;
+  background: #f5f7f3;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.55;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; touch-action: manipulation; }
+button:disabled { cursor: wait; opacity: .65; }
+a { color: inherit; }
+h1, h2, h3, p { margin: 0; }
+input, select, textarea {
+  width: 100%; min-width: 0; min-height: 48px;
+  border: 1px solid #7d9182; border-radius: 8px;
+  padding: 11px 12px; background: #fff; color: #203d38;
+  font-size: 16px;
+}
+textarea { resize: vertical; }
+input[aria-invalid='true'], select[aria-invalid='true'] { border: 2px solid #a12f25; background: #fff9f6; }
+input[type='checkbox'] { width: 22px; height: 22px; min-height: 22px; flex-shrink: 0; accent-color: #1c5848; }
+:focus-visible { outline: 3px solid #b97728; outline-offset: 4px; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #23745f; outline-offset: 2px; }
+small { font-size: 12px; line-height: 1.55; color: #53675d; }
+button, a, input, select, textarea, section, #calculator { scroll-margin-top: 92px; }
+::selection { background: #d2e8b2; color: #173f34; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }

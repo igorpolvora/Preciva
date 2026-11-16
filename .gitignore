@@ -1,0 +1,9 @@
+﻿node_modules/
+frontend/dist/
+*.log
+
+# Configuração local e credenciais
+.vercel/
+.env
+.env.*
+!.env.example
