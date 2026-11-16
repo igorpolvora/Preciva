@@ -4,7 +4,7 @@
 
 A publicação foi autorizada pelo usuário em 16/11/2026. A configuração está preparada em `frontend/vercel.json`; nenhum deploy deve ser considerado realizado sem confirmação remota e URL nesta seção.
 
-**GitHub:** conexão disponível para a conta `igorpolvora`, mas a pasta fornecida não tinha `.git` nem remoto. O usuário informou https://github.com/igorpolvora/Preciva.git e a conexão confirmou o repositório público, branch main e permissão de escrita. O envio será feito para esse destino.
+**GitHub:** conexão disponível para a conta `igorpolvora`, mas a pasta fornecida não tinha `.git` nem remoto. O usuário informou https://github.com/igorpolvora/Preciva.git e a conexão confirmou o repositório público, branch main e permissão de escrita. Os arquivos foram publicados para esse destino pela conexão GitHub autorizada.
 
 **Vercel:** integração encontrada, ainda não instalada/conectada na verificação inicial. Sem CLI autenticada ou credencial de deploy disponível. É necessária a conexão da conta antes de publicar. Nenhum token deve ser enviado em mensagens ou versionado.
 
@@ -30,5 +30,9 @@ Depois: registrar URL do repositório, SHA remoto, projeto/ambiente Vercel, depl
 
 ## Resultado remoto
 
-**Destino GitHub confirmado. Envio e deploy Vercel ainda não confirmados.**
+**GitHub publicado:** https://github.com/igorpolvora/Preciva, branch `main`. Commit da aplicação: `7d676824a56274da32dc9141d71daaa4c82d1879`.
+
+**Vercel pendente:** integração ainda não instalada/conectada; não foi criado deployment nem retornada URL de produção. Instalar/conectar a Vercel é a ação necessária para continuar. O código e a configuração estão preparados; não há confirmação de deploy.
+
+**Verificações desta publicação:** 63 testes aprovados, lint e build aprovados. O Git local foi alinhado ao remoto após confirmar árvores idênticas, sem alterar a aplicação. O push via Git local não tinha credenciais; o envio foi concluído pela conexão GitHub. As pendências visuais anteriores continuam registradas.
 
