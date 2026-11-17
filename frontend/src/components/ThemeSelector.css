@@ -1,0 +1,59 @@
+.theme-selector { position: relative; }
+.theme-selector-trigger,
+.theme-selector-menu button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  padding-inline: var(--space-3);
+  color: var(--ink);
+  font-size: var(--text-label);
+  font-weight: 600;
+  transition: background-color var(--motion-fast) var(--ease-ui), border-color var(--motion-fast) var(--ease-ui);
+}
+.theme-selector-trigger {
+  border: 1px solid var(--outline);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+}
+.theme-selector-chevron {
+  color: var(--muted);
+  transition: transform var(--motion-fast) var(--ease-ui);
+}
+.theme-selector-trigger[aria-expanded='true'] .theme-selector-chevron { transform: rotate(180deg); }
+.theme-selector-menu {
+  position: absolute;
+  z-index: 5;
+  inset-block-start: calc(100% + var(--space-2));
+  inset-inline-end: 0;
+  width: max-content;
+  min-width: 10rem;
+  padding: var(--space-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-popover);
+}
+.theme-selector-menu button {
+  display: flex;
+  width: 100%;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  text-align: start;
+}
+.theme-selector-menu button svg:last-child:not(:first-child) { margin-inline-start: auto; }
+@media (hover: hover) {
+  .theme-selector-trigger:hover,
+  .theme-selector-menu button:hover { background: var(--softer); }
+}
+.theme-selector-trigger:active,
+.theme-selector-menu button:active { background: var(--soft); }
+.theme-selector-menu button[aria-checked='true'] { color: var(--accent-ink); background: var(--accent-soft); }
+.theme-selector-menu button:focus-visible { outline-offset: -3px; }
+@media (max-width: 460px) {
+  .theme-selector { grid-column: 2; grid-row: 1; justify-self: end; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-selector-trigger, .theme-selector-chevron, .theme-selector-menu button { transition: none; }
+}

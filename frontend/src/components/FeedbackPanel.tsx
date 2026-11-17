@@ -1,6 +1,8 @@
 ﻿import { useState } from 'react'
 import { deliverFeedback, downloadText, FEEDBACK_EMAIL, feedbackEmailUrl, prepareFeedback } from '../feedback'
 import type { FeedbackMethod } from '../feedback'
+import { ArrowUpRight } from 'lucide-react'
+import { Button, Card, FormField, Select } from './ui/primitives'
 
 const messages = {
   draft_opened: 'Solicitamos a abertura do seu aplicativo de e-mail. Revise e envie por lá. Se não abriu, copie ou baixe o texto; nenhum recebimento foi confirmado.',
@@ -34,16 +36,53 @@ export function FeedbackPanel({ onPrepared, onEmail }: { onPrepared: () => void;
     setStatus(messages[result])
     setBusy(false)
   }
-  return <section className="feedback-section" id="feedback" aria-labelledby="feedback-title">
-    <div className="feedback-intro"><span className="eyebrow">CONSTRUÍDO COM QUEM TRABALHA</span><h2 id="feedback-title">Fez sentido para você?</h2><p>Seu olhar ajuda a melhorar o Preciva. Leva um minuto, é voluntário e não precisa de cadastro.</p><p className="help-text">Destino: <strong>{FEEDBACK_EMAIL}</strong>. Você revisa e confirma o envio no seu aplicativo de e-mail.</p></div>
-    <form className="feedback-form" noValidate onSubmit={event => { event.preventDefault(); void send('email') }}>
-      <div className="field"><label htmlFor="feedback-clarity">Como foi entender a calculadora?</label><select id="feedback-clarity" value={clarity} aria-invalid={!!error} aria-describedby={error ? 'feedback-error' : 'feedback-privacy'} onChange={event => { setClarity(event.target.value); setError(''); setStatus('') }}><option value="">Escolha uma opção</option><option value="easy">Fácil de entender</option><option value="regular">Entendi com alguma dificuldade</option><option value="difficult">Difícil de entender</option></select></div>
-      <div className="field"><label htmlFor="feedback-comment">O que podemos melhorar? <span className="optional">(opcional)</span></label><textarea id="feedback-comment" rows={4} maxLength={1000} value={comment} aria-describedby="feedback-privacy feedback-count" onChange={event => { setComment(event.target.value); setStatus('') }} placeholder="Conte qual parte ficou clara ou onde você teve dificuldade." /><small id="feedback-count">{comment.length}/1.000 caracteres</small></div>
-      <p id="feedback-privacy" className="help-text">O feedback contém apenas a opção de clareza e o texto que você escrever. Nenhum valor ou descrição da calculadora é anexado. Evite incluir dados pessoais ou financeiros no comentário.</p>
-      {error && <p className="field-error" id="feedback-error" role="alert">{error}</p>}
-      <div className="feedback-actions"><button type="submit" className="primary-button" disabled={busy}>Preparar e-mail ↗</button><button type="button" className="secondary-button" disabled={busy} onClick={() => void send('copy')}>Copiar texto</button><button type="button" className="text-button" disabled={busy} onClick={() => void send('download')}>Baixar feedback</button></div>
-      <p role="status" aria-live="polite" className="feedback-status">{status}</p>
-    </form>
-  </section>
+  return (
+    <section className="feedback-section" id="feedback" aria-labelledby="feedback-title">
+      <div className="feedback-intro">
+        <h2 id="feedback-title">Como foi calcular seu preço?</h2>
+        <p>Conte o que funcionou para você e o que podemos melhorar.</p>
+      </div>
+      <Card as="form" className="feedback-form" noValidate onSubmit={event => { event.preventDefault(); void send('email') }}>
+        <FormField id="feedback-clarity" label="Como foi entender a calculadora?" error={error} announceError>
+          {attributes => <Select
+            {...attributes}
+            value={clarity}
+            required
+            onChange={event => { setClarity(event.target.value); setError(''); setStatus('') }}
+          >
+            <option value="">Escolha uma opção</option>
+            <option value="easy">Fácil de entender</option>
+            <option value="regular">Entendi com alguma dificuldade</option>
+            <option value="difficult">Difícil de entender</option>
+          </Select>}
+        </FormField>
+        <FormField
+          id="feedback-comment"
+          label={<>O que podemos melhorar? <span className="optional">(opcional)</span></>}
+          hint={`${comment.length}/1.000 caracteres`}
+          describedBy="feedback-privacy"
+        >
+          {attributes => <textarea
+            {...attributes}
+            className="control"
+            rows={3}
+            maxLength={1000}
+            value={comment}
+            onChange={event => { setComment(event.target.value); setStatus('') }}
+            placeholder="Ex.: tive dúvida sobre como incluir as taxas."
+          />}
+        </FormField>
+        <p id="feedback-privacy" className="help-text">O feedback inclui apenas sua resposta e seu comentário. Evite escrever dados pessoais ou financeiros.</p>
+        <div className="feedback-actions">
+          <Button type="submit" variant="primary" disabled={busy}>Preparar e-mail <ArrowUpRight size={16} aria-hidden="true" /></Button>
+          <div className="feedback-alternatives" role="group" aria-label="Alternativas ao e-mail">
+            <Button variant="text" disabled={busy} onClick={() => void send('copy')}>Copiar texto</Button>
+            <Button variant="text" disabled={busy} onClick={() => void send('download')}>Baixar feedback</Button>
+          </div>
+        </div>
+        <p className="help-text feedback-destination">Revise o e-mail no seu aplicativo antes de enviar para <strong>{FEEDBACK_EMAIL}</strong>.</p>
+        <p role="status" className="feedback-status">{status}</p>
+      </Card>
+    </section>
+  )
 }
-

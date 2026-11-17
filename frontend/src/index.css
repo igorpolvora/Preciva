@@ -1,32 +1,113 @@
-﻿:root {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  color: #203d38;
-  background: #f5f7f3;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  font-size: 16px;
-  line-height: 1.55;
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source("./");
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-border: var(--border);
 }
-* { box-sizing: border-box; }
-body { margin: 0; }
-button, input, select, textarea { font: inherit; }
-button { cursor: pointer; touch-action: manipulation; }
-button:disabled { cursor: wait; opacity: .65; }
-a { color: inherit; }
-h1, h2, h3, p { margin: 0; }
-input, select, textarea {
-  width: 100%; min-width: 0; min-height: 48px;
-  border: 1px solid #7d9182; border-radius: 8px;
-  padding: 11px 12px; background: #fff; color: #203d38;
-  font-size: 16px;
+
+@layer base {
+  :root {
+    --font-ui: 'Segoe UI', system-ui, sans-serif;
+    --text-small: .75rem;
+    --text-label: .875rem;
+    --text-body: 1rem;
+    --text-section: clamp(1.2rem, 2vw, 1.375rem);
+    --weight-label: 600;
+    --weight-heading: 680;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --radius-control: 9px;
+    --radius-card: 16px;
+    --radius-pill: 999px;
+    --control-height: 44px;
+    --motion-fast: 150ms;
+    --ease-ui: ease-out;
+    font-family: var(--font-ui);
+    color: var(--ink);
+    background: var(--page);
+    font-synthesis: none;
+    font-size: 16px;
+    line-height: 1.5;
+    color-scheme: light dark;
+    /* Graphite surfaces with the original Preciva green for actions and status. */
+    --page: light-dark(#f7f8f7, #161817);
+    --surface: light-dark(#fff, #1e201f);
+    --softer: light-dark(#fafafa, #212121);
+    --soft: light-dark(oklch(.95 0 0), oklch(.269 0 0));
+    --ink: light-dark(oklch(.145 0 0), oklch(.985 0 0));
+    --muted: light-dark(oklch(.51 0 0), oklch(.75 0 0));
+    --line: light-dark(#dedede, #393939);
+    --outline: light-dark(#808080, #858585);
+    --primary: light-dark(#1a5744, #9edbb8);
+    --primary-hover: light-dark(#123e31, #b8e9cc);
+    --accent-soft: light-dark(#eaf3ec, #23372d);
+    --accent-ink: light-dark(#184b39, #b8e9cc);
+    --primary-dark: var(--ink);
+    --focus: light-dark(#187052, #9bdab7);
+    --stroke: 1px solid var(--line);
+    --shadow-card: 0 1px 3px light-dark(rgb(0 0 0 / 5%), rgb(0 0 0 / 15%));
+    --shadow-popover: 0 8px 24px light-dark(rgb(0 0 0 / 13%), rgb(0 0 0 / 45%));
+    --result-surface: light-dark(#202020, #282828);
+    --result-text: #fafafa;
+    --result-secondary: #d1d1d1;
+    --result-line: #626262;
+    --result-inset: #383838;
+    --danger: light-dark(oklch(.51 .19 27), oklch(.76 .15 22));
+    --danger-hover: light-dark(#841919, #ffd1cd);
+    --danger-surface: var(--softer);
+    --danger-fill: var(--danger);
+    --on-danger: light-dark(white, #171717);
+    --warning-surface: var(--soft);
+    --background: var(--surface);
+    --foreground: var(--ink);
+    --primary-foreground: light-dark(#fff, #103023);
+    --border: var(--line);
+  }
+  :root[data-theme='light'] { color-scheme: light; }
+  :root[data-theme='dark'] { color-scheme: dark; }
+  @media (prefers-reduced-motion: reduce) {
+    :root { --motion-fast: 0ms; }
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  h1, h2, h3, p { margin: 0; }
+  h2, h3 { line-height: 1.24; letter-spacing: -.02em; }
+  h3 { font-size: 16px; }
+  button, input, select, textarea { font: inherit; }
+  button { cursor: pointer; touch-action: manipulation; }
+  button:disabled { cursor: not-allowed; opacity: .65; }
+  a { color: inherit; }
+  .control, textarea {
+    width: 100%;
+    min-width: 0;
+    min-height: var(--control-height);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--outline);
+    border-radius: var(--radius-control);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: var(--text-body);
+    transition: border-color var(--motion-fast) var(--ease-ui), background-color var(--motion-fast) var(--ease-ui);
+  }
+  .control:enabled:hover, textarea:enabled:hover { border-color: var(--ink); }
+  .control:disabled, textarea:disabled { color: var(--muted); background: var(--soft); cursor: not-allowed; }
+  .control::placeholder, textarea::placeholder { color: var(--muted); opacity: 1; }
+  textarea { resize: vertical; }
+  .control[aria-invalid='true'] { border-color: var(--danger); box-shadow: inset 0 0 0 1px var(--danger); background: var(--danger-surface); }
+  input[type='checkbox'] { width: 22px; height: 22px; min-height: 22px; flex-shrink: 0; accent-color: var(--primary); }
+  small { font-size: var(--text-small); line-height: 1.45; color: var(--muted); }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+  section { scroll-margin-top: 16px; }
+  ::selection { background: var(--primary); color: var(--primary-foreground); }
 }
-textarea { resize: vertical; }
-input[aria-invalid='true'], select[aria-invalid='true'] { border: 2px solid #a12f25; background: #fff9f6; }
-input[type='checkbox'] { width: 22px; height: 22px; min-height: 22px; flex-shrink: 0; accent-color: #1c5848; }
-:focus-visible { outline: 3px solid #b97728; outline-offset: 4px; }
-input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid #23745f; outline-offset: 2px; }
-small { font-size: 12px; line-height: 1.55; color: #53675d; }
-button, a, input, select, textarea, section, #calculator { scroll-margin-top: 92px; }
-::selection { background: #d2e8b2; color: #173f34; }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
